@@ -26,6 +26,10 @@ type Logger struct {
 	Level LogLevel //Log level
 }
 
+func NewLogger(typpe, src string, lv LogLevel) *Logger {
+	return &Logger{Type: typpe, Src: src, Level: lv}
+}
+
 //LogFatal will record fatal.
 func (lgr *Logger) LogFatal(tag, msg string) {
 	if lgr.Level <= FATAL {

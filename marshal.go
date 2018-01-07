@@ -1,6 +1,7 @@
 package util
 
 import (
+	"fmt"
 	"syscall"
 	"unsafe"
 )
@@ -16,4 +17,12 @@ func UTF16Ptr(s string) uintptr {
 
 func ToPtr(i interface{}) uintptr {
 	return uintptr(unsafe.Pointer(&i))
+}
+
+func GetProcAddr(handle syscall.Handle, name string) uintptr {
+	addr, err := syscall.GetProcAddress(handle, name)
+	if err != nil {
+		panic(fmt.Sprintf("%s %s", name, err.Error()))
+	}
+	return addr
 }
