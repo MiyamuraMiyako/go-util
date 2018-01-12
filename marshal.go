@@ -2,12 +2,12 @@ package util
 
 import (
 	"fmt"
+	"runtime"
 	"syscall"
 	"unsafe"
 )
 
 func IntPtr(n int) uintptr {
-	ToPtr(true)
 	return uintptr(n)
 }
 
@@ -25,4 +25,10 @@ func GetProcAddr(handle syscall.Handle, name string) uintptr {
 		panic(fmt.Sprintf("%s %s", name, err.Error()))
 	}
 	return addr
+}
+
+func KeepAlive(vars ...interface{}) {
+	for v := range vars {
+		runtime.KeepAlive(v)
+	}
 }

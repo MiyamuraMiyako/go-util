@@ -31,41 +31,41 @@ func NewLogger(typpe, src string, lv LogLevel) *Logger {
 }
 
 //LogFatal will record fatal.
-func (lgr *Logger) LogFatal(tag, msg string) {
+func (lgr *Logger) LogFatal(tag, msg interface{}) {
 	if lgr.Level <= FATAL {
 		lgr.logEvyThg("FATAL", tag, msg)
 	}
 }
 
 //LogError will record error.
-func (lgr *Logger) LogError(tag, msg string) {
+func (lgr *Logger) LogError(tag, msg interface{}) {
 	if lgr.Level <= ERROR {
 		lgr.logEvyThg("ERROR", tag, msg)
 	}
 }
 
 //LogWarn will record warning.
-func (lgr *Logger) LogWarn(tag, msg string) {
+func (lgr *Logger) LogWarn(tag, msg interface{}) {
 	if lgr.Level <= WARN {
 		lgr.logEvyThg("WARN", tag, msg)
 	}
 }
 
 //LogInfo will record infomation.
-func (lgr *Logger) LogInfo(tag, msg string) {
+func (lgr *Logger) LogInfo(tag, msg interface{}) {
 	if lgr.Level <= INFO {
 		lgr.logEvyThg("INFO", tag, msg)
 	}
 }
 
 //LogDebug will record debug infomation.
-func (lgr *Logger) LogDebug(tag, msg string) {
+func (lgr *Logger) LogDebug(tag, msg interface{}) {
 	if lgr.Level <= DEBUG {
 		lgr.logEvyThg("DEBUG", tag, msg)
 	}
 }
 
-func (lgr *Logger) logEvyThg(lv, tag, msg string) {
+func (lgr *Logger) logEvyThg(lv string, tag, msg interface{}) {
 	spath := fmt.Sprintf("./Log/%s/%s", lgr.Type, time.Now().Format("2006-01-02"))
 	os.MkdirAll(spath, os.ModePerm)
 	f, err := os.OpenFile(fmt.Sprintf("%s/%s.txt", spath, lgr.Src), os.O_RDWR|os.O_CREATE|os.O_APPEND, 0665)
