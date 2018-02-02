@@ -5,9 +5,11 @@ import (
 	"io"
 	"log"
 	"os"
+	"runtime"
 	"time"
 )
 
+//LogLevel is log level.
 type LogLevel int
 
 //LogLevel enums.
@@ -26,6 +28,7 @@ type Logger struct {
 	Level LogLevel //Log level
 }
 
+//NewLogger will return Logger strcut instance.
 func NewLogger(typpe, src string, lv LogLevel) *Logger {
 	return &Logger{Type: typpe, Src: src, Level: lv}
 }
@@ -75,5 +78,14 @@ func (lgr *Logger) logEvyThg(lv string, tag, msg interface{}) {
 	defer f.Close()
 	log.SetOutput(io.MultiWriter(f, os.Stdout))
 	log.SetFlags(log.Ldate | log.Ltime | log.Lmicroseconds)
-	log.Printf("[%s] %s: %s", lv, tag, msg)
+	log.Printf("[%s] %s: %s%s", lv, tag, msg, NewLine())
+}
+
+func NewLine() string {
+	if runtime.GOOS == "windows" {
+		return "\r\n"
+	} else if runtime.GOOS == "darwin" {
+		return "\r"
+	}
+	return "\n"
 }

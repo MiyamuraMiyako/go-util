@@ -1,4 +1,4 @@
-package util
+package introp
 
 import (
 	"fmt"
@@ -7,18 +7,19 @@ import (
 	"unsafe"
 )
 
-func IntPtr(n int) uintptr {
-	return uintptr(n)
-}
-
-func UTF16Ptr(s string) uintptr {
-	return uintptr(unsafe.Pointer(syscall.StringToUTF16Ptr(s)))
-}
-
+//ToPtr will get var or struct' address and return uintptr.
 func ToPtr(i interface{}) uintptr {
-	return uintptr(unsafe.Pointer(&i))
+	switch i.(type) {
+	case int:
+		return uintptr(i.(int))
+	case string:
+		return uintptr(unsafe.Pointer(syscall.StringToUTF16Ptr(i.(string))))
+	default:
+		return uintptr(unsafe.Pointer(&i))
+	}
 }
 
+//GetProcAddr return Proc's address.
 func GetProcAddr(handle syscall.Handle, name string) uintptr {
 	addr, err := syscall.GetProcAddress(handle, name)
 	if err != nil {
@@ -27,6 +28,7 @@ func GetProcAddr(handle syscall.Handle, name string) uintptr {
 	return addr
 }
 
+//KeepAlive is batch invoke runtime.KeepAlive() with many vars.
 func KeepAlive(vars ...interface{}) {
 	for v := range vars {
 		runtime.KeepAlive(v)
