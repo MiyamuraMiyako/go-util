@@ -16,3 +16,8 @@ func GB2312BytsToString(byts []byte, idx, l int) string {
 func BytsToString(byts []byte, idx, l int) string {
 	return string(bytes.TrimRight(byts[idx:idx+l], "\x00"))
 }
+
+func UTF8StringToGBKByts(str string) []byte {
+	d, _ := ioutil.ReadAll(transform.NewReader(bytes.NewReader(([]byte)(str)), simplifiedchinese.GBK.NewEncoder()))
+	return d
+}
