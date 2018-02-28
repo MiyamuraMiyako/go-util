@@ -1,6 +1,7 @@
 package introp
 
 import (
+	"syscall"
 	"unsafe"
 )
 
@@ -10,7 +11,10 @@ func ToPtr(i interface{}) uintptr {
 	case int:
 		return uintptr(i.(int))
 	case string:
-		fallthrough
+		s, _ := syscall.BytePtrFromString(i.(string))
+		return uintptr(unsafe.Pointer(s))
+	case []byte:
+		return uintptr(unsafe.Pointer(&i.([]byte)[0]))
 	default:
 		return uintptr(unsafe.Pointer(&i))
 	}

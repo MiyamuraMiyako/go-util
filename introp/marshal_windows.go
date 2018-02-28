@@ -13,6 +13,8 @@ func ToPtr(i interface{}) uintptr {
 		return uintptr(i.(int))
 	case string:
 		return uintptr(unsafe.Pointer(syscall.StringToUTF16Ptr(i.(string))))
+	case []byte:
+		return uintptr(unsafe.Pointer(&i.([]byte)[0]))
 	default:
 		return uintptr(unsafe.Pointer(&i))
 	}
