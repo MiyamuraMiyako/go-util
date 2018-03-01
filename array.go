@@ -12,12 +12,3 @@ func SequenceEqual(a []byte, b []byte) bool {
 	}
 	return true
 }
-
-//CopyBytes is simple copy util
-func CopyBytes(src []byte, srcIdx int, to []byte, dstIdx int, l int) {
-	for ; l != 0; l-- {
-		to[dstIdx] = src[srcIdx]
-		srcIdx++
-		dstIdx++
-	}
-}
