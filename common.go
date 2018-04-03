@@ -22,6 +22,7 @@ func FileExist(path string) (bool, error) {
 	return false, err
 }
 
+//RandomHex 随机十六进制字符串
 func RandomHex(l int) string {
 	bytes := make([]byte, l)
 	for i := 0; i < l; i++ {
@@ -30,6 +31,7 @@ func RandomHex(l int) string {
 	return string(bytes)
 }
 
+//RandInt 随机整数
 func RandInt(min int, max int) int {
 	return min + rand.Intn(max-min)
 }
