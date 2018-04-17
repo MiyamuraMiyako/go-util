@@ -78,7 +78,7 @@ func (lgr *Logger) logEvyThg(lv string, tag, msg interface{}) {
 	defer f.Close()
 	log.SetOutput(io.MultiWriter(f, os.Stdout))
 	log.SetFlags(log.Ldate | log.Ltime | log.Lmicroseconds)
-	log.Printf("[%s] %s: %s%s", lv, tag, msg, NewLine())
+	log.Printf("[%s] %v: %v%s", lv, tag, msg, NewLine())
 }
 
 func NewLine() string {
