@@ -21,6 +21,14 @@ const (
 	FATAL
 )
 
+const (
+	color_red     = uint8(iota + 91) //\x1b[91m%s\x1b[0m
+	color_green                      //\x1b[92m%s\x1b[0m
+	color_yellow                     //\x1b[93m%s\x1b[0m
+	color_blue                       //\x1b[94m%s\x1b[0m
+	color_magenta                    //洋红  //\x1b[95m%s\x1b[0m
+)
+
 //Logger is a common console and file logger.
 type Logger struct {
 	Type  string //
@@ -36,28 +44,28 @@ func NewLogger(typpe, src string, lv LogLevel) *Logger {
 //LogFatal will record fatal.
 func (lgr *Logger) LogFatal(tag, msg interface{}) {
 	if lgr.Level <= FATAL {
-		lgr.logEvyThg("FATAL", tag, msg)
+		lgr.logEvyThg(fmt.Sprintf("\x1b[91m%s\x1b[0m", "FATAL"), tag, msg)
 	}
 }
 
 //LogError will record error.
 func (lgr *Logger) LogError(tag, msg interface{}) {
 	if lgr.Level <= ERROR {
-		lgr.logEvyThg("ERROR", tag, msg)
+		lgr.logEvyThg(fmt.Sprintf("\x1b[95m%s\x1b[0m", "ERROR"), tag, msg)
 	}
 }
 
 //LogWarn will record warning.
 func (lgr *Logger) LogWarn(tag, msg interface{}) {
 	if lgr.Level <= WARN {
-		lgr.logEvyThg("WARN", tag, msg)
+		lgr.logEvyThg(fmt.Sprintf("\x1b[93m%s\x1b[0m", "WARN"), tag, msg)
 	}
 }
 
 //LogInfo will record infomation.
 func (lgr *Logger) LogInfo(tag, msg interface{}) {
 	if lgr.Level <= INFO {
-		lgr.logEvyThg("INFO", tag, msg)
+		lgr.logEvyThg(fmt.Sprintf("\x1b[92m%s\x1b[0m", "INFO"), tag, msg)
 	}
 }
 
