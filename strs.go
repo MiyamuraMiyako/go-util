@@ -1,6 +1,10 @@
 package util
 
-import "unicode/utf8"
+import (
+	"C"
+	"unsafe"
+	"unicode/utf8"
+)
 
 //SubStr will split string using index and length
 func SubStr(s string, pos, length int) string {
@@ -20,4 +24,9 @@ func Substr(s string, pos int) string {
 		l = len(runes)
 	}
 	return string(runes[pos:l])
+}
+
+//UintptrToString uinptr转GoString
+func UintptrToString(ptr uintptr) string {
+	return C.GoString((*C.char)(unsafe.Pointer(ptr)))
 }
